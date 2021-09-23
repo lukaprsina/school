@@ -27,29 +27,25 @@ public:
     {
     }
 
-    double ConvertTo(double length, Unit from, Unit to)
+    double Convert(double length, Unit from, Unit to)
     {
-        auto a = k_Map.at(from);
-        auto b = k_Map.at(to);
-        auto c = length;
-        auto d = a / b * c;
-        return d;
+        return length * k_Map.at(from) / k_Map.at(to);
     }
 
     std::string ToMetric()
     {
         double remaining = m_Length;
 
-        double meters = ConvertTo(remaining, DefaultUnit, Unit::Meters);
-        remaining -= ConvertTo(std::floor(meters), Unit::Meters, DefaultUnit);
+        double meters = Convert(remaining, DefaultUnit, Unit::Meters);
+        remaining -= Convert(std::floor(meters), Unit::Meters, DefaultUnit);
 
-        double decimeters = ConvertTo(remaining, DefaultUnit, Unit::Decimeters);
-        remaining -= ConvertTo(std::floor(decimeters), Unit::Decimeters, DefaultUnit);
+        double decimeters = Convert(remaining, DefaultUnit, Unit::Decimeters);
+        remaining -= Convert(std::floor(decimeters), Unit::Decimeters, DefaultUnit);
 
-        double centimeters = ConvertTo(remaining, DefaultUnit, Unit::Centimeters);
-        remaining -= ConvertTo(std::floor(centimeters), Unit::Centimeters, DefaultUnit);
+        double centimeters = Convert(remaining, DefaultUnit, Unit::Centimeters);
+        remaining -= Convert(std::floor(centimeters), Unit::Centimeters, DefaultUnit);
 
-        double milimeters = ConvertTo(remaining, DefaultUnit, Unit::Milimeters);
+        double milimeters = Convert(remaining, DefaultUnit, Unit::Milimeters);
 
         return std::to_string(static_cast<int>(std::floor(meters))) + "m " +
                std::to_string(static_cast<int>(std::floor(decimeters))) + "dm " +
@@ -58,7 +54,7 @@ public:
     }
 
 private:
-    double m_Length{0.0f};
+    double m_Length;
     Unit m_Unit = DefaultUnit;
 };
 
