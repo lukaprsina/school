@@ -53,7 +53,7 @@ struct LibStruct
 
 int main(int, char **)
 {
-    const hello obj;
+    hello obj;
 
     Callback<decltype(&hello::f), &hello::f>::set(&obj);
     Callback<decltype(&hello::f), &hello::f>::call(0);
